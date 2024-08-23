@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
-
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -8,6 +7,10 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 
+/// @title SteamPunk Nft ERC721
+/// @author @felixkamau
+/// @notice This is SteamPunk Nft contract
+/// @dev Implementation of ERC721 token for SteamPunk Nft
 
 contract SteamPunk is ERC721, ERC721Burnable, ReentrancyGuard, Ownable{
     // TokenId to keep track of the minted tokens
