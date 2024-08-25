@@ -34,4 +34,28 @@ describe("SteamPunk NFT Contract", () => {
       steamPunk.connect(addr1).safeMint(addr1.address, { value: ethers.parseEther("0.001")})
     ).to.be.revertedWith("Insufficient funds sent for minting");
   });
+
+
+  it("Should fail to mint if the max-supply is reached",async () => {
+    for(let i = 0; i < 7; i++){
+      await steamPunk.connect(addr1).safeMint(addr1.address, {value: ethers.parseEther("0.01")});
+    }
+
+    await expect(
+      steamPunk.connect(addr1).safeMint(addr1.address, {value: ethers.parseEther("0.01")})
+    ).to.be.revertedWith("You cannot mint any more");
+  })
+
+
+  it("Should allow owner to withdraw funds", async () => {
+    await steamPunk.connect(addr1).safeMint(addr1.address,{value: ethers.parseEther("0.01")});
+    const initialBalance = await ethers.provider.getBalance(owner.address);
+    // console.log(`InitialBalance: ${initialBalance}`);
+    await steamPunk.connect(owner).withdraw();
+
+    const finalBalance = await ethers.provider.getBalance(owner.address);
+    // console.log(`finalBalance: ${finalBalance}`);
+
+    expect(finalBalance).to.be.gt(initialBalance);
+  })
 });
